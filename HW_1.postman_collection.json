@@ -1,0 +1,479 @@
+{
+	"info": {
+		"_postman_id": "00544bef-0587-4809-936f-fc1005a8e42d",
+		"name": "HW_2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "first",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//1.Send a get request;",
+							"",
+							"//2.Status code: Code is 200;",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"// 3. Check that the correct string comes in body.",
+							"pm.test(\"Body is correct\", function () {",
+							"    pm.response.to.have.body(\"This is the first responce from server!\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "{{url}}/first",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"first"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user_info_3",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//1.Send a post request;",
+							"",
+							"//2.Status code: Code is 200;",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"//3.Parse response body to json;",
+							"var jsonResp = pm.response.json();",
+							"",
+							"//4.Check that the name in the response is equal to the name in the request (name - type in manually.)",
+							"pm.test(\"Your name s request\", function (){",
+							"    pm.expect(jsonResp.name).to.eql(\"Larina\")",
+							"});",
+							"",
+							"//5.Check that the age in the response is equal to the age in the request (age - type in manually.)",
+							"pm.test(\"Your age s request\", function(){",
+							"    pm.expect(jsonResp.age).to.eql(\"25\")",
+							"})",
+							"",
+							"//6.Check that the salary in the response is equal to the salary in the request (salary - type in manually.)",
+							"pm.test(\"Your salary s request\", function(){",
+							"    pm.expect(jsonResp.salary).to.eql(850)",
+							"})",
+							"",
+							"//7.Parse request.",
+							"var post_form_data = request.data;",
+							"",
+							"//8.Check that the name in the response is equal to the name in the request (name pick up from request.)",
+							"pm.test(\"Your name s request\", () => {",
+							"  pm.expect(jsonResp.name).to.eql(post_form_data.name);",
+							"});",
+							"",
+							"//9.Check that the age in the response is equal to the age in the request (age pick up from request.)",
+							"pm.test(\"Your age s request\", () => {",
+							"  pm.expect(jsonResp.age).to.eql(post_form_data.age);",
+							"});",
+							"//10.Check that the salary in the response is equal to the salary in the request (salary pick up from request.)",
+							"pm.test(\"Your salary s request\", () => {",
+							"  pm.expect(jsonResp.salary).to.eql(+post_form_data.salary);",
+							"});",
+							"",
+							"//11. Output the family parameter from the response to the console.",
+							"console.log(\"Family parameter = \", jsonResp.family)",
+							"",
+							"//12. Check that the u_salary_1_5_year in the response is equal to the salary*4 (salary pick up from request)",
+							"var familysalary = jsonResp.family[\"u_salary_1_5_year\"]; ",
+							"",
+							"pm.test(\"Your u_salary_1_5_year request\", () => {",
+							"  pm.expect(familysalary).to.eql(post_form_data.salary*4);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "Larina",
+							"type": "default"
+						},
+						{
+							"key": "age",
+							"value": "25",
+							"type": "default"
+						},
+						{
+							"key": "salary",
+							"value": "850",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}/user_info_3",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"user_info_3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "object_info_3",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//1.Send a get request.",
+							"//2.Status code: Code is 200.",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"//3.Parse response body to json.",
+							"var jsonResp = pm.response.json();",
+							"",
+							"//4.Parse request.",
+							"let get_params = pm.request.url.query.toObject();",
+							"",
+							"//5.Check that the name in the response is equal to the name in the request (name pick up from request.)",
+							"pm.test(\"Name in response is equal to name in request\", () => {",
+							"  pm.expect(jsonResp.name).to.eql(get_params.name);",
+							"});",
+							"",
+							"//6.Check that the age in the response is equal to the age in the request (age pick up from request.)",
+							"pm.test(\"Age in response is equal to age in request\", () => {",
+							"  pm.expect(jsonResp.age).to.eql(get_params.age);",
+							"});",
+							"",
+							"//7.Check that the salary in the response is equal to the salary in the request (salary pick up from request.)",
+							"pm.test(\"Salary in response is equal to salary in request\", () => {",
+							"  pm.expect(+jsonResp.salary).to.eql(+get_params.salary);",
+							"});",
+							"",
+							"//8.Output the family parameter from the response to the console.",
+							"console.log(\"Family parameter = \", jsonResp.family)",
+							"",
+							"//9.Check that the dog parameter has name parameters.",
+							"pm.test(\"The dog parameter has name parameters\", () => {",
+							"  pm.expect(jsonResp.family.pets.dog).to.haveOwnProperty(\"name\");",
+							"});",
+							"",
+							"//10.Check that the dog parameter has age parameters.",
+							"pm.test(\"The dog parameter has age parameters\", () => {",
+							"  pm.expect(jsonResp.family.pets.dog).to.haveOwnProperty(\"age\");",
+							"});",
+							"",
+							"//11.Check that the name parameter is equal to \"Luky\".",
+							"pm.test(\"The name parameter is Luky\", () => {",
+							"  pm.expect(jsonResp.family.pets.dog.name).to.eql(\"Luky\");",
+							"});",
+							"",
+							"//12.Check that the age parameter is 4.",
+							"pm.test(\"The age parameter is 4\", () => {",
+							"  pm.expect(jsonResp.family.pets.dog.age).to.eql(4);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "{{url}}/object_info_3?name=Larina&age=25&salary=850",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"object_info_3"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Larina"
+						},
+						{
+							"key": "age",
+							"value": "25"
+						},
+						{
+							"key": "salary",
+							"value": "850"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "object_info_4",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//1. Send a get request.",
+							"",
+							"//2. Status code: Code is 200",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"//3. Parse response body to json.",
+							"var jsonResp = pm.response.json();",
+							"",
+							"//4. Parse request.",
+							"let get_params = pm.request.url.query.toObject();",
+							"",
+							"//5. Check that the name in the response is equal to the name in the request (name pick up from request.)",
+							"pm.test(\"Name in response is equal to name in request\", () => {",
+							"  pm.expect(jsonResp.name).to.eql(get_params.name);",
+							"});",
+							"",
+							"//6. Check that the age in the response is equal to the age in the request (age pick up from request.)",
+							"pm.test(\"Age in response is equal to age in request\", () => {",
+							"  pm.expect(+jsonResp.age).to.eql(+get_params.age);",
+							"});",
+							"",
+							"//7. Output the salary parameter from the request to the console.",
+							"console.log(\"Salary_request = \" + +get_params.salary)",
+							"",
+							"//8. Output the salary parameter from the response to the console.",
+							"console.log(\"Salary_response = \" + jsonResp.salary)",
+							"",
+							"//9. Output the 0th element of the salary parameter from response to the console.",
+							"console.log(\"Salary_0 = \" + jsonResp.salary[0])",
+							"",
+							"//10. Output the 1th element of the salary parameter from response to the console.",
+							"console.log(\"Salary_1 = \" + jsonResp.salary[1])",
+							"",
+							"//11. Output the 2th element of the salary parameter from response to the console.",
+							"console.log(\"Salary_2 = \" + jsonResp.salary[2])",
+							"",
+							"//12. Check that the 0th element of the salary parameter is equal to the salary from request (salary pick up from request.)",
+							"pm.test(\"The 0th element of the salary parameter is equal to the salary from request\", () => {",
+							"  pm.expect(jsonResp.salary[0]).to.eql(+get_params.salary);",
+							"});",
+							"",
+							"//13. Check that the 1st element of the salary parameter is equal to the salary*2 from request (salary pick up from request.)",
+							"pm.test(\"The 1st element of the salary parameter is equal to salary*2 from request\", () => {",
+							"  pm.expect(+jsonResp.salary[1]).to.eql(+get_params.salary*2);",
+							"});",
+							"",
+							"//14. Check that the 2nd element of the salary parameter is equal to the salary*3 from request (salary pick up from request.)",
+							"pm.test(\"The 2nd element of the salary parameter is equal to salary*3 from request\", () => {",
+							"  pm.expect(+jsonResp.salary[2]).to.eql(+get_params.salary*3);",
+							"});",
+							"",
+							"//15. Create a name variable in the environment ",
+							"//16. Create an age variable in the environment",
+							"//17. Create a salary variable in the environment",
+							"//18. Pass the name variable to the environment",
+							"pm.environment.set(\"name\", get_params.name);",
+							"//19. Pass the age variable to the environment",
+							"pm.environment.set(\"age\", get_params.age);",
+							"//20. Pass the salary variable to the environment",
+							"pm.environment.set(\"salary\", get_params.salary);",
+							"",
+							"//21. Write a loop that output the elements of the list from the salary parameter to the console in order.",
+							"var difsalaries = jsonResp.salary;",
+							"for (var i = 0; i < difsalaries.length; i++) {",
+							"    console.log( + difsalaries[i]);",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/object_info_4?name=Larina&age=25&salary=850",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"object_info_4"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Larina"
+						},
+						{
+							"key": "age",
+							"value": "25"
+						},
+						{
+							"key": "salary",
+							"value": "850"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user_info_2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"//1. Insert the salary parameter from the environment into request.",
+							"//2. Insert the age parameter from the environment into age.",
+							"//3. Insert the name parameter from the environment into name.",
+							"//4. Send a post request.",
+							"//5. Status code: Code is 200.",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"//6. Parse response body to json.",
+							"var jsonResp = pm.response.json();",
+							"//7. Parse request.",
+							"var post_form_data = request.data;",
+							"//8. Check json response has start_qa_salary parameter.",
+							"pm.test(\"json response has start_qa_salary parameter\", () => {",
+							"  pm.expect(jsonResp).to.haveOwnProperty(\"start_qa_salary\");",
+							"});",
+							"//9. Check json response has qa_salary_after_6_months parameter",
+							"pm.test(\"json response has qa_salary_after_6_months parameter\", () => {",
+							"  pm.expect(jsonResp).to.haveOwnProperty(\"qa_salary_after_6_months\");",
+							"});",
+							"//10. Check json response has qa_salary_after_12_months parameter",
+							"pm.test(\"json response has qa_salary_after_12_months parameter\", () => {",
+							"  pm.expect(jsonResp).to.haveOwnProperty(\"qa_salary_after_12_months\");",
+							"});",
+							"//11. Check json response has qa_salary_after_1.5_year parameter",
+							"pm.test(\"json response has qa_salary_after_1.5_year parameter\", () => {",
+							"  pm.expect(jsonResp).to.haveOwnProperty(\"qa_salary_after_1.5_year\");",
+							"});",
+							"//12. Check json response has parameter qa_salary_after_3.5_years",
+							"pm.test(\"json response has parameter qa_salary_after_3.5_years\", () => {",
+							"  pm.expect(jsonResp).to.haveOwnProperty(\"qa_salary_after_3.5_years\");",
+							"});",
+							"//13. Check json response has person parameter",
+							"pm.test(\"json response имеет параметр person\", () => {",
+							"  pm.expect(jsonResp).to.haveOwnProperty(\"person\");",
+							"});",
+							"//14. Check that start_qa_salary parameter is equal to salary from request (salary pick up from request.)",
+							"pm.test(\"the start_qa_salary parameter is equal to salary from request\", () => {",
+							"  pm.expect(+jsonResp.start_qa_salary).to.eql(+post_form_data.salary);",
+							"});",
+							"//15. Check that qa_salary_after_6_months parameter is equal to salary*2 from request (salary pick up from request.)",
+							"pm.test(\"the qa_salary_after_6_months parameter is equal to salary*2 from request\", () => {",
+							"  pm.expect(+jsonResp.qa_salary_after_6_months).to.eql(+post_form_data.salary*2);",
+							"});",
+							"//16. Check that qa_salary_after_12_months parameter is equal to salary*2.7 from request (salary pick up from request.)",
+							"pm.test(\"the qa_salary_after_12_months parameter is equal to salary*2.7 from request\", () => {",
+							"  pm.expect(+jsonResp.qa_salary_after_12_months).to.eql(+post_form_data.salary*2.7);",
+							"});",
+							"//17. Check that qa_salary_after_1.5_year parameter is equal to salary*3.3 from request (salary pick up request.)",
+							"pm.test(\"the qa_salary_after_1.5_year parameter is equal to salary*3.3 from request\", () => {",
+							"  pm.expect(+jsonResp[\"qa_salary_after_1.5_year\"]).to.eql(+post_form_data.salary*3.3);",
+							"});",
+							"//18. Check that qa_salary_after_3.5_years parameter is equal to salary*3.8 from request (salary pick up from request.)",
+							"pm.test(\"the qa_salary_after_3.5_years parameter is equal to salary*3.8 from request\", () => {",
+							"  pm.expect(+jsonResp[\"qa_salary_after_3.5_years\"]).to.eql(+post_form_data.salary*3.8);",
+							"});",
+							"//19. Check that in the person parameter, the 1st element from u_name is equal to the salary from request (salary pick up from request.)",
+							"pm.test(\"in the person parameter, the 1st element from u_name is equal to the salary from request\", () => {",
+							"  pm.expect(+jsonResp.person.u_name[1]).to.eql(+post_form_data.salary);",
+							"});",
+							"//20. Check that the u_age parameter is equal to age from request (age pick up from request.)",
+							"pm.test(\"параметр u_age равен age из request\", () => {",
+							"  pm.expect(+jsonResp.person.u_age).to.eql(+post_form_data.age);",
+							"});",
+							"//21. Check that the u_salary_5_years parameter is equal to salary*4.2 from request (salary pick up from request.)",
+							"pm.test(\"параметр u_salary_5_years равен salary*4.2 из request\", () => {",
+							"  pm.expect(+jsonResp.person.u_salary_5_years).to.eql(+post_form_data.salary*4.2);",
+							"});",
+							"//22. *** Write a loop that will output the list items from the person parameter to the console in order",
+							"for (const [key, value] of Object.entries(jsonResp.person)) {",
+							"  console.log(`${key}: ${value}`);",
+							"}",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "{{name}}",
+							"type": "default"
+						},
+						{
+							"key": "age",
+							"value": "{{age}}",
+							"type": "default"
+						},
+						{
+							"key": "salary",
+							"value": "{{salary}} ",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}/user_info_2",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"user_info_2"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
